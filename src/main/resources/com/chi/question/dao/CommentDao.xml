@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chi.question.dao.CommentDao">
+
+	<resultMap id="CommentMapper" type="com.chi.question.domain.Comment">
+		<id property="id" column="id"/>
+		<result property="userId" column="user_id"/>
+		<result property="entityId" column="entity_id"/>
+		<result property="entityType" column="entity_type"/>
+		<result property="content" column="content"/>
+		<result property="createdDate" column="created_date"/>
+		<result property="status" column="status"/>
+		<association property="user" javaType="com.chi.question.domain.User">
+			<id property="id" column="id"/>
+			<result property="name" column="name"/>
+			<result property="headUrl" column="head_url"/>
+		</association>
+	</resultMap>
+
+	<sql id="selectFields"></sql>
+
+	<select id="selectByEntityWithUser" resultMap="com.chi.question.dao.CommentDao.CommentMapper">
+		select c.id, c.user_id,
+			   c.content,
+			   c.created_date,
+			   c.entity_id,
+			   c.entity_type,
+			   c.status,
+			   u.id,
+			   u.name,
+			   u.head_url
+		from comment c
+				 join user u on c.user_id = u.id
+		where entity_type = #{entityType}
+		  and entity_id = #{entityId}
+		order by created_date desc
+	</select>
+
+
+</mapper>

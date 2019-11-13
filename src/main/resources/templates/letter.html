@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN" dropeffect="none"
+      class="js is-AppPromotionBarVisible cssanimations csstransforms csstransitions flexbox no-touchevents no-mobile"
+      style="">
+<div th:replace="common::#header"></div>
+<link rel="stylesheet" href="../styles/detail.css">
+
+<body class="zhi ">
+
+<div id="nav" role="navigation" class="zu-top" th:replace="common::#nav"></div>
+<link rel="stylesheet" media="all" href="../styles/letter.css">
+
+
+<div id="main">
+    <div class="zg-wrap zu-main clearfix ">
+        <ul class="letter-list">
+
+            <li id="conversation-item-10005_622873" th:each="c:${conversations}">
+                <a class="letter-link" th:href="@{/msg/detail(conversationId=${c.conversationId})}"></a>
+                <div class="letter-info">
+                    <span class="l-time">[(${#dates.format(c.createdDate ,'yyyy-MM-dd HH:mm:ss')})]</span>
+                    <div class="l-operate-bar">
+                        <!--<a href="javascript:void(0);" class="sns-action-del" data-id="10005_622873">
+                        删除
+                        </a>-->
+                        <a th:href="@{/msg/detail(conversationId=${c.conversationId})}">
+                            [(${c.id}+'条会话')]
+                        </a>
+                    </div>
+                </div>
+                <div class="chat-headbox">
+                        <span class="msg-num">
+                            [(${c.unread})]
+                        </span>
+                    <a class="list-head">
+                        <img alt="头像" th:src="${c.otherUser.headUrl}">
+                    </a>
+                </div>
+                <div class="letter-detail">
+                    <a title="通知" class="letter-name level-color-1">
+                        [(${c.otherUser.name})]
+                    </a>
+                    <p class="letter-brief">
+                        [(${c.content})]
+                    </p>
+                </div>
+            </li>
+
+        </ul>
+
+    </div>
+</div>
+
+
+</body>
+</html>
